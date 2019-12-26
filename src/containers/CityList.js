@@ -2,6 +2,15 @@ import React from "react";
 import City from "../components/City";
 
 class CityList extends React.Component {
+  componentDidMount() {
+    const ls = JSON.parse(localStorage.getItem("state"));
+    if (ls && ls.cities) ls.cities.map((city) => this.props.addCity(city));
+  }
+  componentDidUpdate() {
+    ((cities = this.props.favoriteCities
+      .map(({ cityName }) => cityName)) => localStorage.setItem('state', JSON.stringify({ cities })))();
+  }
+
   onBtnClick = e => {
     if (e.keyCode === 13) {
       const city = e.target.value;
@@ -35,7 +44,7 @@ class CityList extends React.Component {
       }
     }
     if (cityNameList.length === 0) {
-      cityNameList.push(<div>No favorite cities</div>);
+      cityNameList.push(<div key={'without cities'}>No favorite cities</div>);
     }
     return cityNameList;
   }
@@ -56,8 +65,8 @@ class CityList extends React.Component {
         {this.props.isFetching ? (
           <p>Loading...</p>
         ) : (
-          <ul>{this.createList(this.props)}</ul>
-        )}
+            <ul>{this.createList(this.props)}</ul>
+          )}
       </div>
     );
   }

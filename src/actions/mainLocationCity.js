@@ -23,10 +23,17 @@ function requestAndUpdateLocation(dispatch) {
         dispatch
       );
     },
+    () => {
+      getLocation(
+        undefined,
+        undefined,
+        dispatch
+      );
+    }
   );
 }
 
-function getLocation(latitude, longitude, dispatch) {
+function getLocation(latitude = 59.927756800000004, longitude = 30.355455999999997, dispatch) {
   fetch(
     `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=${apiKey}`
   )

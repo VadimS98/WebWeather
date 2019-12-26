@@ -12,18 +12,20 @@ export const initialState = {
 };
 
 export function favoriteCitiesReducer(state = initialState, action) {
-  var upFavoriteCities = state.favoriteCities.slice();
+  let upFavoriteCities = state.favoriteCities.slice();
   switch (action.type) {
     case ADD_FAVORITE_REQUEST:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: true
-      });
+      };
     case ADD_FAVORITE_SUCCESS:
       upFavoriteCities.push(action.payload);
-      return Object.assign({}, state, {
+      return {
+        ...state,
         favoriteCities: upFavoriteCities,
         isFetching: false
-      });
+      };
     case ADD_FAVORITE_NO_CITY:
       alert(`No info for city ${action.payload}`);
       return Object.assign({}, state, {
